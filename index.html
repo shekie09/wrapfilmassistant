@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wrap! Film Production Assistant</title>
+<meta name="description" content="Wrap! Film Production Assistant. Script to final delivery on Mac, Windows, iPhone and iPad.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a slate-board site. Sections are "scenes" in the order a film is made. Gold slate stripe is the only ornament. */
+:root {
+  --bg: #eceff3;
+  --surface: #ffffff;
+  --ink: #14181d;
+  --muted: #566170;
+  --line: #d5dae1;
+  --gold: #b9803c;
+  --gold-ink: #ffffff;
+  --band: #14181d;
+  --band-ink: #f3f5f8;
+  --band-muted: #a3adba;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101317; --surface: #181c22; --ink: #eef1f5; --muted: #9aa5b3; --line: #2a313a;
+    --gold: #d9a05a; --gold-ink: #17110a; --band: #0a0c0f; --band-ink: #f3f5f8; --band-muted: #9aa5b3;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101317; --surface: #181c22; --ink: #eef1f5; --muted: #9aa5b3; --line: #2a313a;
+  --gold: #d9a05a; --gold-ink: #17110a; --band: #0a0c0f; --band-ink: #f3f5f8; --band-muted: #9aa5b3;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; padding-block: 0; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+.wrap { max-width: 1080px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+.stripe { height: 14px; background: repeating-linear-gradient(115deg, var(--band) 0 22px, var(--gold) 22px 44px); }
+
+/* nav */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; flex-wrap: wrap; }
+.brand { font-family: var(--display); font-weight: 900; font-size: 24px; letter-spacing: -0.02em; text-decoration: none; }
+.brand span { color: var(--gold); }
+.nav-links { display: flex; gap: 22px; font-size: 14px; font-weight: 500; color: var(--muted); flex-wrap: wrap; }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--ink); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 44px 64px; }
+.kicker { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.hero h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 900; letter-spacing: -0.03em; margin: 14px 0 18px; }
+.lede { font-size: 19px; color: var(--muted); max-width: 520px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); }
+.btn:hover { border-color: var(--ink); }
+.btn.primary { background: var(--gold); border-color: var(--gold); color: var(--gold-ink); }
+.btn.primary:hover { filter: brightness(1.06); }
+.fine { margin-top: 14px; font-size: 13px; color: var(--muted); }
+
+/* dashboard mock */
+.mock { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: 0 24px 60px -30px rgba(0,0,0,.35); }
+.mock-bar { display: flex; align-items: center; gap: 6px; padding: 2px 4px 12px; }
+.mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+.mock-bar b { margin-left: 10px; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.08em; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tile { border-radius: 10px; padding: 12px 10px; color: #fff; min-width: 0; }
+.tile strong { display: block; font-family: var(--display); font-size: 14px; line-height: 1.15; overflow-wrap: anywhere; }
+.tile small { display: block; margin-top: 3px; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; opacity: .85; }
+
+/* scene sections */
+.scene { padding-block: 64px; border-top: 1px solid var(--line); }
+.slate { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 14px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.slate em { font-style: normal; color: var(--gold); }
+.scene h2 { font-size: clamp(30px, 4.2vw, 46px); font-weight: 800; letter-spacing: -0.025em; max-width: 680px; }
+.scene .intro { margin-top: 14px; max-width: 620px; color: var(--muted); font-size: 17px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 32px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; min-width: 0; }
+.card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 15px; }
+
+/* band */
+.band { background: var(--band); color: var(--band-ink); }
+.band .slate { color: var(--band-muted); }
+.band .intro { color: var(--band-muted); }
+.band .card { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.12); }
+.band .card p { color: var(--band-muted); }
+.steps { counter-reset: s; list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 12px; max-width: 720px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 14px 16px; }
+.steps li::before { content: counter(s); font-family: var(--mono); font-weight: 700; font-size: 18px; color: var(--gold-ink); background: var(--gold); width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; }
+.steps b { display: block; font-family: var(--display); font-size: 17px; margin-bottom: 2px; }
+.steps span { color: var(--band-muted); font-size: 15px; }
+
+/* download */
+.dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 32px; }
+.dl a { text-decoration: none; background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px; padding: 20px; display: block; }
+.dl a:hover { border-color: var(--gold); }
+.dl b { display: block; font-family: var(--display); font-size: 20px; }
+.dl span { color: var(--muted); font-size: 14px; }
+
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+details + details { margin-top: 10px; }
+summary { cursor: pointer; font-weight: 600; }
+details p { margin-top: 10px; color: var(--muted); }
+.faq { margin-top: 28px; max-width: 760px; }
+
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+@media (max-width: 820px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 28px 44px; }
+  .scene { padding-block: 48px; }
+}
+@media (max-width: 420px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+
+<div class="stripe"></div>
+<div class="wrap">
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="#top">Wrap<span>!</span></a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#workflow">How it works</a>
+      <a href="#students">Students</a>
+      <a href="#download">Download</a>
+      <a href="#faq">Questions</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <div class="kicker">Film Production Assistant</div>
+      <h1>From script to final delivery.</h1>
+      <p class="lede">One program for the whole shoot. Write or import your script, plan the schedule, build call sheets, track the budget and keep your cast and crew in the loop. On your Mac, your PC, your iPhone and your iPad.</p>
+      <div class="cta">
+        <a class="btn primary" href="#download">Download for free</a>
+        <a class="btn" href="#workflow">See how it works</a>
+      </div>
+      <p class="fine">Free to download. Unlock it with a member key.</p>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><i></i><i></i><i></i><b>WRAP! DASHBOARD</b></div>
+      <div class="tiles">
+        <div class="tile" style="background:#c9965a"><strong>Production</strong><small>Projects</small></div>
+        <div class="tile" style="background:#5a8fc9"><strong>Cast &amp; Crew</strong><small>Members</small></div>
+        <div class="tile" style="background:#5fae7a"><strong>Schedule</strong><small>Days</small></div>
+        <div class="tile" style="background:#d98a5a"><strong>Call Sheet</strong><small>Sheets</small></div>
+        <div class="tile" style="background:#a877c9"><strong>Line Budget</strong><small>Budget</small></div>
+        <div class="tile" style="background:#d9667a"><strong>Shot Lists</strong><small>Camera</small></div>
+        <div class="tile" style="background:#4aa3c9"><strong>Chat</strong><small>Messages</small></div>
+        <div class="tile" style="background:#8a7a5a"><strong>Writing</strong><small>Scripts</small></div>
+        <div class="tile" style="background:#e6665a"><strong>Elements</strong><small>Tagging</small></div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<section class="scene" id="features">
+  <div class="wrap">
+    <div class="slate"><em>Everything on set</em><span>34 tools in one place</span></div>
+    <h2>Built for the way a film actually gets made.</h2>
+    <p class="intro">Every tool is a card on your dashboard. Drag the cards into the order you work in.</p>
+    <div class="grid">
+      <div class="card"><h3>Script and breakdown</h3><p>Write screenplays and AV scripts, or import Final Draft, Fountain, PDF and text. Tag props, wardrobe and vehicles with color coded strips.</p></div>
+      <div class="card"><h3>Schedule and call sheets</h3><p>Place scenes on shoot days, build the daily call sheet, and let the program find the nearest hospital for your shoot address.</p></div>
+      <div class="card"><h3>Budget and payroll</h3><p>Plan every line, then track what you actually spend. Keep time cards for the crew.</p></div>
+      <div class="card"><h3>Cast and crew</h3><p>One roster with phone numbers and emails. Text your whole team from your own Messages app, even people who do not have Wrap!.</p></div>
+      <div class="card"><h3>Releases and signatures</h3><p>Deal memos and release forms signed with a finger or a mouse, saved with the production.</p></div>
+      <div class="card"><h3>Shots, boards and looks</h3><p>Shot lists and storyboards link to each scene. Build lookbooks and keep every image and file in a media library.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="scene band" id="workflow">
+  <div class="wrap">
+    <div class="slate"><em>Workflow</em><span>In the order you will use it</span></div>
+    <h2>Five steps from idea to wrap.</h2>
+    <ol class="steps">
+      <li><div><b>Start a production</b><span>Name your film. Everything you add belongs to it.</span></div></li>
+      <li><div><b>Bring in your script</b><span>Import it or write it here. Scenes are made for you.</span></div></li>
+      <li><div><b>Build your team</b><span>Add cast and crew, locations and equipment.</span></div></li>
+      <li><div><b>Plan the shoot</b><span>Schedule the days and send call sheets.</span></div></li>
+      <li><div><b>Shoot and track</b><span>Log takes, hours and spending. Back up your work.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="scene" id="devices">
+  <div class="wrap">
+    <div class="slate"><em>Everywhere</em><span>Mac, Windows, iPhone and iPad</span></div>
+    <h2>Plan at your desk. Run it from your pocket.</h2>
+    <p class="intro">Use the same sync room on your computer, iPhone and iPad and your production stays matched on all of them. Back up the whole production to a single file any time.</p>
+  </div>
+</section>
+
+<section class="scene" id="students">
+  <div class="wrap">
+    <div class="slate"><em>Film students</em><span>Class projects and first shoots</span></div>
+    <h2>Learn the real process while you make your film.</h2>
+    <p class="intro">Wrap! follows the same steps professional productions use. A built in tutorial walks you through the real screens, and a User Guide explains what every section does and how to use it.</p>
+    <div class="grid">
+      <div class="card"><h3>Guided tour</h3><p>The first time you open the program, it darkens the screen and lights up where to click, one step at a time.</p></div>
+      <div class="card"><h3>User Guide</h3><p>Searchable help for every tool, with a simple student workflow from first draft to final shoot.</p></div>
+      <div class="card"><h3>Free to try</h3><p>Download it and look around before you decide.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="download">
+  <div class="wrap">
+    <div class="slate"><em>Download</em><span>Free for Mac and Windows</span></div>
+    <h2>Get Wrap! for your computer.</h2>
+    <p class="intro">Open the download page and pick the file that matches your computer. The program updates itself when a new version comes out.</p>
+    <div class="dl">
+      <a href="https://github.com/shekie09/wrap-releases/releases/latest" target="_blank" rel="noopener"><b>Mac, Apple Silicon</b><span>For M1 and newer Macs. File ends in Mac-Silicon.dmg</span></a>
+      <a href="https://github.com/shekie09/wrap-releases/releases/latest" target="_blank" rel="noopener"><b>Mac, Intel</b><span>For older Intel Macs. File ends in Mac-Intel.dmg</span></a>
+      <a href="https://github.com/shekie09/wrap-releases/releases/latest" target="_blank" rel="noopener"><b>Windows</b><span>For Windows 10 and 11. File ends in Windows-Setup.exe</span></a>
+    </div>
+    <p class="fine">Not sure which Mac you have? Click the Apple menu, then About This Mac. If it says Apple M1 or higher, choose Apple Silicon.</p>
+  </div>
+</section>
+
+<section class="scene" id="faq">
+  <div class="wrap">
+    <div class="slate"><em>Questions</em><span>Quick answers</span></div>
+    <h2>Before you download.</h2>
+    <div class="faq">
+      <details><summary>What is a member key?</summary><p>The program is free to download. A member key unlocks it. The key is a one time purchase, not a subscription.</p></details>
+      <details><summary>Where do I get a member key?</summary><p>Member keys are not on sale yet. Check back here soon.</p></details>
+      <details><summary>Does it work on Android?</summary><p>Not yet. Today Wrap! runs on Mac, Windows, iPhone and iPad.</p></details>
+      <details><summary>Do my cast and crew need Wrap! installed?</summary><p>No. You can text them from your own Messages app and share call sheets with anyone.</p></details>
+      <details><summary>Is my work safe?</summary><p>Your production lives on your computer. You can back it up to a single file at any time and restore it later.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><footer>Wrap! Film Production Assistant. Made for filmmakers.</footer></div>
+
+</body>
+</html>
