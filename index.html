@@ -126,7 +126,8 @@ img { display: block; max-width: 100%; }
 .devices { background: radial-gradient(70% 80% at 50% 100%, rgba(224,166,90,.16), transparent 70%), var(--bg2); border-block: 1px solid var(--line); overflow: hidden; }
 .stage { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, .5fr); gap: clamp(16px, 4vw, 48px); align-items: end; margin-top: 56px; }
 .phone { width: min(100%, 250px); margin-inline: auto; border-radius: 38px; padding: 9px; background: linear-gradient(145deg, #3a3f47, #15181c); box-shadow: 0 40px 80px -20px rgba(0,0,0,.9), inset 0 0 0 1px rgba(255,255,255,.18); position: relative; }
-.phone .screen { border-radius: 30px; background: #eceff3; overflow: hidden; aspect-ratio: 9 / 18.5; padding: 30px 10px 12px; position: relative; color: #14181d; }
+.phone .screen { border-radius: 30px; background: #eceff3; overflow: hidden; aspect-ratio: 9 / 18.5; padding: 0; position: relative; color: #14181d; }
+.phone .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
 .phone .screen::before { content: ""; position: absolute; top: 9px; left: 50%; width: 62px; height: 18px; margin-left: -31px; border-radius: 99px; background: #05070a; }
 .phone h4 { margin: 4px 2px 8px; font-family: var(--display); font-size: 15px; font-weight: 900; letter-spacing: -.02em; }
 .phone h4 small { display: block; font-family: var(--mono); font-size: 7px; font-weight: 700; letter-spacing: .18em; color: #6b7684; }
@@ -306,7 +307,7 @@ footer b { color: var(--ink); font-family: var(--display); }
           <li>Equipment rentals priced with tax and shipping</li>
         </ul>
       </div>
-      <div class="shot"><div class="window"><div class="bar"><i></i><i></i><i></i><b>SCHEDULE</b></div><img loading="lazy" src="assets/schedule.webp" width="1500" height="938" alt="The schedule screen with shoot days, scenes and call times"></div></div>
+      <div class="shot"><div class="window"><div class="bar"><i></i><i></i><i></i><b>LINE BUDGET</b></div><img loading="lazy" src="assets/budget.webp" width="1500" height="937" alt="The line budget screen showing planned and actual spending by category"></div></div>
     </div>
   </div>
 </section>
@@ -341,21 +342,9 @@ footer b { color: var(--ink); font-family: var(--display); }
     <h2>Plan at your desk.<br>Run it from your pocket.</h2>
     <p class="intro">Use the same sync room on your computer, iPhone and iPad and your production stays matched on all of them.</p>
     <div class="stage">
-      <div class="window"><div class="bar"><i></i><i></i><i></i><b>WRAP! ON YOUR COMPUTER</b></div><img loading="lazy" src="assets/crew.webp" width="1500" height="938" alt="The cast and crew roster on a computer"></div>
+      <div class="window"><div class="bar"><i></i><i></i><i></i><b>WRAP! ON YOUR COMPUTER</b></div><img loading="lazy" src="assets/dashboard.webp" width="1800" height="1125" alt="The Wrap! dashboard on a computer"></div>
       <div class="phone" aria-hidden="true">
-        <div class="screen">
-          <h4><small>FILM PRODUCTION ASSISTANT</small>Wrap!</h4>
-          <div class="pgrid">
-            <div class="pcard" style="background:#c9965a"><span>🎬</span><b>Production</b></div>
-            <div class="pcard" style="background:#5a8fc9"><span>👥</span><b>Cast &amp; Crew</b></div>
-            <div class="pcard" style="background:#5fae7a"><span>📅</span><b>Schedule</b></div>
-            <div class="pcard" style="background:#e6665a"><span>📍</span><b>Location</b></div>
-            <div class="pcard" style="background:#a877c9"><span>📊</span><b>Line Budget</b></div>
-            <div class="pcard" style="background:#d98a5a"><span>📋</span><b>Call Sheet</b></div>
-            <div class="pcard" style="background:#3a3a40"><span>🎞</span><b>Digital Slate</b></div>
-            <div class="pcard" style="background:#d8a93f"><span>📷</span><b>Equipment</b></div>
-          </div>
-        </div>
+        <div class="screen"><img loading="lazy" src="assets/phone-dashboard.webp" width="620" height="1298" alt="The same Wrap! dashboard on an iPhone"></div>
       </div>
     </div>
     <div class="sync"><a class="store" href="#devices" aria-label="Wrap! on the App Store for iPhone and iPad"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.9-.8-3.100-.8-1.600 0-3.100.9-3.900 2.400-1.700 2.900-.4 7.200 1.200 9.600.8 1.200 1.700 2.500 3 2.400 1.200 0 1.700-.8 3.100-.8 1.500 0 1.900.8 3.100.8 1.300 0 2.100-1.200 2.900-2.300.9-1.300 1.300-2.600 1.300-2.700 0 0-2.500-1-2.700-3.700zM14.100 5.800c.7-.8 1.100-1.900 1-3-1 0-2.100.7-2.800 1.500-.6.700-1.200 1.800-1 2.900 1.100.1 2.100-.5 2.800-1.400z"/></svg><span><small>Free companion app on the</small><b>App Store</b></span></a><span class="chip">Free iPhone and iPad companion</span><span class="chip">Unlocked by your member key</span><span class="chip">Back up to a single file</span></div>
