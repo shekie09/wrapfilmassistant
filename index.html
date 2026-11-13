@@ -196,7 +196,7 @@ footer b { color: var(--ink); font-family: var(--display); }
 .store b { display: block; font-family: var(--display); font-size: 21px; line-height: 1.1; letter-spacing: -.01em; }
 @media (prefers-reduced-motion: reduce) { .slides img { transition: none; } }
 
-.hero-photo { position: absolute; inset: 0; z-index: -2; background: url(assets/photo-stage.webp) center 30% / cover no-repeat; opacity: .3; -webkit-mask-image: linear-gradient(#000 35%, transparent 92%); mask-image: linear-gradient(#000 35%, transparent 92%); }
+.hero-photo { position: absolute; inset: 0; z-index: -2; background: url(assets/photo-stage.webp) center 30% / cover no-repeat; opacity: .26; -webkit-mask-image: linear-gradient(#000 35%, transparent 92%); mask-image: linear-gradient(#000 35%, transparent 92%); }
 .mosaic { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 44px; }
 .mosaic figure { margin: 0; position: relative; overflow: hidden; border-radius: 18px; background: #14171c; border: 1px solid var(--line); }
 .mosaic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s ease; }
@@ -205,12 +205,15 @@ footer b { color: var(--ink); font-family: var(--display); }
 .m-crew { grid-column: span 4; aspect-ratio: 3 / 2; }
 .m-camera { grid-column: span 2; grid-row: span 2; }
 .m-slate, .m-edit { grid-column: span 2; aspect-ratio: 3 / 2; }
-.cta-photo { position: absolute; inset: 0; z-index: -2; background: url(assets/photo-clapper.webp) center / cover no-repeat; opacity: .32; }
+.cta-photo { position: absolute; inset: 0; z-index: -2; background: url(assets/photo-clapper.webp) center / cover no-repeat; opacity: .2; }
 .cta-band::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(var(--bg), rgba(11,13,16,.55) 40%, var(--bg)); }
 .credits { margin-top: 14px; font-size: 12.5px; opacity: .8; }
 @media (max-width: 900px) {
   .m-crew { grid-column: span 6; } .m-camera { grid-column: span 3; grid-row: auto; aspect-ratio: 3 / 4; } .m-slate { grid-column: span 3; aspect-ratio: 3 / 4; } .m-edit { grid-column: span 6; aspect-ratio: 3 / 2; }
 }
+
+.scene { isolation: isolate; }
+.bg { position: absolute; inset: 0; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat; opacity: .13; pointer-events: none; -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); filter: saturate(.8); }
 </style>
 </head>
 <body>
@@ -277,23 +280,8 @@ footer b { color: var(--ink); font-family: var(--display); }
   <div class="perf"></div>
 </section>
 
-<section class="scene" id="onset" style="padding-bottom:0">
-  <div class="wrap">
-    <div class="center">
-      <div class="slate"><em>Made for real sets</em><span>From prep to post</span></div>
-      <h2>Wherever the shoot goes, Wrap! goes with it.</h2>
-      <p class="intro">Desert exteriors, soundstages, tight interiors and long nights in the edit. One tool for the whole crew.</p>
-    </div>
-    <div class="mosaic">
-      <figure class="m-crew"><img loading="lazy" src="assets/photo-crew.webp" width="1800" height="1350" alt="A film crew with a boom microphone, camera dolly and camera on a western town set"><figcaption>On location</figcaption></figure>
-      <figure class="m-camera"><img loading="lazy" src="assets/photo-camera.webp" width="1100" height="1650" alt="Camera operators holding a cinema camera rig"><figcaption>Camera department</figcaption></figure>
-      <figure class="m-slate"><img loading="lazy" src="assets/photo-slate.webp" width="1800" height="1199" alt="A digital slate with scene and take numbers held in front of actors"><figcaption>Digital slate</figcaption></figure>
-      <figure class="m-edit"><img loading="lazy" src="assets/photo-edit.webp" width="1800" height="1200" alt="A colorful video editing timeline on a screen"><figcaption>In the edit</figcaption></figure>
-    </div>
-  </div>
-</section>
-
 <section class="scene" id="features">
+  <div class="bg" aria-hidden="true" style="background-image:url(assets/photo-crew.webp);background-position:center 45%"></div>
   <div class="wrap">
     <div class="center">
       <div class="slate"><em>Everything on set</em><span>Real screens, real tools</span></div>
@@ -346,6 +334,7 @@ footer b { color: var(--ink); font-family: var(--display); }
 </section>
 
 <section class="scene" id="tools" style="padding-top:0">
+  <div class="bg" aria-hidden="true" style="background-image:url(assets/photo-camera.webp);background-position:center 40%"></div>
   <div class="wrap">
     <div class="center">
       <div class="slate"><em>34 tools</em><span>One dashboard</span></div>
@@ -370,6 +359,7 @@ footer b { color: var(--ink); font-family: var(--display); }
 </section>
 
 <section class="scene devices" id="devices">
+  <div class="bg" aria-hidden="true" style="background-image:url(assets/photo-slate.webp);background-position:center 40%"></div>
   <div class="wrap">
     <div class="slate"><em>Everywhere</em><span>Mac, Windows, iPhone and iPad</span></div>
     <h2>Plan at your desk.<br>Run it from your pocket.</h2>
@@ -385,6 +375,7 @@ footer b { color: var(--ink); font-family: var(--display); }
 </section>
 
 <section class="scene" id="workflow">
+  <div class="bg" aria-hidden="true" style="background-image:url(assets/photo-edit.webp);background-position:center"></div>
   <div class="wrap">
     <div class="center">
       <div class="slate"><em>Workflow</em><span>In the order you will use it</span></div>
