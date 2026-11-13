@@ -195,11 +195,28 @@ footer b { color: var(--ink); font-family: var(--display); }
 .store small { display: block; font-size: 10.5px; line-height: 1.1; letter-spacing: .02em; }
 .store b { display: block; font-family: var(--display); font-size: 21px; line-height: 1.1; letter-spacing: -.01em; }
 @media (prefers-reduced-motion: reduce) { .slides img { transition: none; } }
+
+.hero-photo { position: absolute; inset: 0; z-index: -2; background: url(assets/photo-stage.webp) center 30% / cover no-repeat; opacity: .3; -webkit-mask-image: linear-gradient(#000 35%, transparent 92%); mask-image: linear-gradient(#000 35%, transparent 92%); }
+.mosaic { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 44px; }
+.mosaic figure { margin: 0; position: relative; overflow: hidden; border-radius: 18px; background: #14171c; border: 1px solid var(--line); }
+.mosaic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s ease; }
+.mosaic figure:hover img { transform: scale(1.04); }
+.mosaic figcaption { position: absolute; left: 14px; bottom: 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.62); backdrop-filter: blur(6px); padding: 6px 10px; border-radius: 6px; }
+.m-crew { grid-column: span 4; aspect-ratio: 3 / 2; }
+.m-camera { grid-column: span 2; grid-row: span 2; }
+.m-slate, .m-edit { grid-column: span 2; aspect-ratio: 3 / 2; }
+.cta-photo { position: absolute; inset: 0; z-index: -2; background: url(assets/photo-clapper.webp) center / cover no-repeat; opacity: .32; }
+.cta-band::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(var(--bg), rgba(11,13,16,.55) 40%, var(--bg)); }
+.credits { margin-top: 14px; font-size: 12.5px; opacity: .8; }
+@media (max-width: 900px) {
+  .m-crew { grid-column: span 6; } .m-camera { grid-column: span 3; grid-row: auto; aspect-ratio: 3 / 4; } .m-slate { grid-column: span 3; aspect-ratio: 3 / 4; } .m-edit { grid-column: span 6; aspect-ratio: 3 / 2; }
+}
 </style>
 </head>
 <body>
 
 <div class="hero-wrap" id="top">
+  <div class="hero-photo" aria-hidden="true"></div>
   <div class="perf"></div>
   <div class="wrap">
     <nav class="nav" aria-label="Main">
@@ -258,6 +275,22 @@ footer b { color: var(--ink); font-family: var(--display); }
     <div class="frame" data-label="Cast and crew" style="background-image:url(assets/crew.webp);background-size:190%;background-position:30% 8%"></div>
   </div>
   <div class="perf"></div>
+</section>
+
+<section class="scene" id="onset" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="center">
+      <div class="slate"><em>Made for real sets</em><span>From prep to post</span></div>
+      <h2>Wherever the shoot goes, Wrap! goes with it.</h2>
+      <p class="intro">Desert exteriors, soundstages, tight interiors and long nights in the edit. One tool for the whole crew.</p>
+    </div>
+    <div class="mosaic">
+      <figure class="m-crew"><img loading="lazy" src="assets/photo-crew.webp" width="1800" height="1350" alt="A film crew with a boom microphone, camera dolly and camera on a western town set"><figcaption>On location</figcaption></figure>
+      <figure class="m-camera"><img loading="lazy" src="assets/photo-camera.webp" width="1100" height="1650" alt="Camera operators holding a cinema camera rig"><figcaption>Camera department</figcaption></figure>
+      <figure class="m-slate"><img loading="lazy" src="assets/photo-slate.webp" width="1800" height="1199" alt="A digital slate with scene and take numbers held in front of actors"><figcaption>Digital slate</figcaption></figure>
+      <figure class="m-edit"><img loading="lazy" src="assets/photo-edit.webp" width="1800" height="1200" alt="A colorful video editing timeline on a screen"><figcaption>In the edit</figcaption></figure>
+    </div>
+  </div>
 </section>
 
 <section class="scene" id="features">
@@ -368,6 +401,7 @@ footer b { color: var(--ink); font-family: var(--display); }
 </section>
 
 <section class="scene cta-band center" id="download" style="border-top:1px solid var(--line)">
+  <div class="cta-photo" aria-hidden="true"></div>
   <div class="wrap">
     <div class="slate"><em>Download</em><span>Free for Mac and Windows</span></div>
     <h2>Get Wrap! for your computer.</h2>
@@ -405,7 +439,7 @@ footer b { color: var(--ink); font-family: var(--display); }
 </section>
 
 <footer>
-  <div class="wrap"><b>Wrap! Film Production Assistant.</b> Made for filmmakers.</div>
+  <div class="wrap"><b>Wrap! Film Production Assistant.</b> Made for filmmakers.<p class="credits">Photos from Unsplash by Luigi Ritchie, Andri Aeschlimann, Jakob Owens, Chris Murray, Avel Chuklanov and Brands&amp;People.</p></div>
 </footer>
 
 <script>
