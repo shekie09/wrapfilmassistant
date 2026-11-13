@@ -228,6 +228,12 @@ footer b { color: var(--ink); font-family: var(--display); }
 .after li::before { content: counter(a); display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--gold); color: var(--gold-ink); font-weight: 800; font-size: 14px; margin-bottom: 10px; }
 .after b { display: block; font-family: var(--display); font-size: 17px; } .after span { color: var(--muted); font-size: 14.5px; }
 @media (max-width: 900px) { .price, .after { grid-template-columns: minmax(0, 1fr); } .price-tag { font-size: 68px; } }
+
+.soon { border: 1px solid rgba(224,166,90,.5); border-radius: 22px; background: #14171c; color: var(--ink); padding: 34px 30px; max-width: 420px; width: calc(100% - 36px); text-align: center; box-shadow: 0 40px 100px -20px rgba(0,0,0,.9); }
+.soon::backdrop { background: rgba(5,6,7,.7); backdrop-filter: blur(4px); }
+.soon h3 { font-size: 34px; font-weight: 900; letter-spacing: -.03em; margin-bottom: 10px; }
+.soon h3 em { font-style: normal; color: var(--gold); }
+.soon p { color: var(--muted); margin-bottom: 22px; }
 </style>
 </head>
 <body>
@@ -420,13 +426,13 @@ footer b { color: var(--ink); font-family: var(--display); }
           <li>Free iPhone and iPad app, unlocked by the same key</li>
           <li>Updates included</li>
         </ul>
-        <a class="btn primary big" data-buy href="https://wrapfilmassistant.lemonsqueezy.com/buy">Buy now</a>
+        <a class="btn primary big" data-buy href="#coming-soon">Buy now</a>
         <p class="fine">Secure checkout. Your key and download links are emailed after you pay.</p>
       </div>
       <div class="price-side">
         <b>Need more than 2 devices?</b>
         <span>Add extra devices for <strong>$49</strong> each. iPhone and iPad never count.</span>
-        <a class="btn" data-buy-extra href="https://wrapfilmassistant.lemonsqueezy.com/buy">Add extra devices</a>
+        <a class="btn" data-buy-extra href="#coming-soon">Add extra devices</a>
       </div>
     </div>
     <ol class="after">
@@ -463,6 +469,20 @@ footer b { color: var(--ink); font-family: var(--display); }
   function show(n){i=n;imgs.forEach(function(m,k){m.classList.toggle("on",k===n);});[].forEach.call(dots.children,function(d,k){d.classList.toggle("on",k===n);});t.textContent=names[n];}
   function start(){clearInterval(timer);if(!matchMedia("(prefers-reduced-motion: reduce)").matches)timer=setInterval(function(){show((i+1)%imgs.length);},3800);}
   show(0);start();
+})();
+</script>
+<dialog class="soon" id="soon" aria-labelledby="soonTitle">
+  <h3 id="soonTitle"><em>Coming soon</em></h3>
+  <p>Wrap! goes on sale very soon. Check back here shortly.</p>
+  <form method="dialog"><button class="btn primary">Got it</button></form>
+</dialog>
+<script>
+(function(){
+  var d=document.getElementById("soon");
+  document.querySelectorAll('a[href="#coming-soon"]').forEach(function(a){
+    a.addEventListener("click",function(e){e.preventDefault();if(d&&d.showModal)d.showModal();else alert("Coming soon");});
+  });
+  if(d)d.addEventListener("click",function(e){if(e.target===d)d.close();});
 })();
 </script>
 </body>
