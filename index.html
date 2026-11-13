@@ -214,6 +214,20 @@ footer b { color: var(--ink); font-family: var(--display); }
 
 .scene { isolation: isolate; }
 .bg { position: absolute; inset: 0; z-index: -1; background-size: cover; background-position: center; background-repeat: no-repeat; opacity: .13; pointer-events: none; -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); filter: saturate(.8); }
+
+.price { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+.price-main, .price-side { background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border: 1px solid var(--line); border-radius: 22px; padding: 30px; backdrop-filter: blur(6px); }
+.price-main { border-color: rgba(224,166,90,.55); box-shadow: 0 30px 80px -40px rgba(224,166,90,.55); }
+.price-tag { font-family: var(--display); font-weight: 900; font-size: 84px; line-height: 1; letter-spacing: -.04em; color: var(--gold); display: flex; align-items: baseline; gap: 4px; margin-bottom: 18px; }
+.price-tag span { font-size: 34px; } .price-tag small { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-left: 10px; }
+.btn.big { padding: 17px 30px; font-size: 17px; margin-top: 24px; }
+.price-side { display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+.price-side b { font-family: var(--display); font-size: 22px; } .price-side span { color: var(--muted); } .price-side strong { color: var(--ink); } .price-side .btn { margin-top: 10px; }
+.after { list-style: none; margin: 34px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; counter-reset: a; text-align: left; }
+.after li { counter-increment: a; background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+.after li::before { content: counter(a); display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--gold); color: var(--gold-ink); font-weight: 800; font-size: 14px; margin-bottom: 10px; }
+.after b { display: block; font-family: var(--display); font-size: 17px; } .after span { color: var(--muted); font-size: 14.5px; }
+@media (max-width: 900px) { .price, .after { grid-template-columns: minmax(0, 1fr); } .price-tag { font-size: 68px; } }
 </style>
 </head>
 <body>
@@ -229,7 +243,7 @@ footer b { color: var(--ink); font-family: var(--display); }
         <a href="#tools">Tools</a>
         <a href="#workflow">How it works</a>
         <a href="#faq">Questions</a>
-        <a class="btn primary" href="#download">Download</a>
+        <a class="btn primary" href="#buy">Buy now</a>
       </div>
     </nav>
 
@@ -238,7 +252,7 @@ footer b { color: var(--ink); font-family: var(--display); }
       <h1>From script to <em>final delivery.</em></h1>
       <p class="lede">One program for the whole shoot. Write or import your script, plan the schedule, build call sheets, track the budget and keep your cast and crew in the loop.</p>
       <div class="cta">
-        <a class="btn primary" href="#download">Download for free</a>
+        <a class="btn primary" href="#buy">Buy now</a>
         <a class="btn" href="#features">See it in action</a><a class="store" href="#devices" aria-label="Wrap! on the App Store for iPhone and iPad"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.9-.8-3.100-.8-1.600 0-3.100.9-3.900 2.400-1.700 2.900-.4 7.200 1.200 9.600.8 1.200 1.700 2.500 3 2.400 1.200 0 1.700-.8 3.100-.8 1.500 0 1.900.8 3.100.8 1.300 0 2.100-1.200 2.900-2.300.9-1.300 1.300-2.600 1.300-2.700 0 0-2.500-1-2.700-3.700zM14.100 5.800c.7-.8 1.100-1.900 1-3-1 0-2.100.7-2.800 1.500-.6.700-1.200 1.800-1 2.900 1.100.1 2.100-.5 2.800-1.400z"/></svg><span><small>Free companion app on the</small><b>App Store</b></span></a>
       </div>
       <div class="platforms" aria-label="Available on">
@@ -391,27 +405,35 @@ footer b { color: var(--ink); font-family: var(--display); }
   </div>
 </section>
 
-<section class="scene cta-band center" id="download" style="border-top:1px solid var(--line)">
+<section class="scene cta-band center" id="buy" style="border-top:1px solid var(--line)">
   <div class="cta-photo" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="slate"><em>Download</em><span>Free for Mac and Windows</span></div>
+    <div class="slate"><em>Buy once</em><span>Yours to keep</span></div>
     <h2>Get Wrap! for your computer.</h2>
-    <p class="intro">Pick the file that matches your computer. The program updates itself when a new version comes out.</p>
-    <div class="dl">
-      <a href="https://download.wrapfilmassistant.com/mac-silicon">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="9" width="34" height="23" rx="3"/><path d="M3 38h42M18 32l-2 6M30 32l2 6"/></svg>
-        <b>Mac, Apple Silicon</b><span>For M1 and newer Macs</span><em>Download →</em>
-      </a>
-      <a href="https://download.wrapfilmassistant.com/mac-intel">
-        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="9" width="34" height="23" rx="3"/><path d="M3 38h42M18 32l-2 6M30 32l2 6"/><path d="M19 20h10"/></svg>
-        <b>Mac, Intel</b><span>For older Intel Macs</span><em>Download →</em>
-      </a>
-      <a href="https://download.wrapfilmassistant.com/windows">
-        <svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true"><path d="M6 10.5l15-2.1v14.1H6zM23.5 8l18.5-2.6v17.1H23.5zM6 25.5h15v14.1L6 37.5zM23.5 25.5H42v17.1L23.5 40z"/></svg>
-        <b>Windows</b><span>For Windows 10 and 11</span><em>Download →</em>
-      </a>
+    <p class="intro">One payment. Your member key and download links arrive in your email right away.</p>
+    <div class="price">
+      <div class="price-main">
+        <div class="price-tag"><span>$</span>129<small>one time</small></div>
+        <ul class="ticks">
+          <li>Wrap! for Mac and Windows</li>
+          <li>Works on 2 computers</li>
+          <li>Free iPhone and iPad app, unlocked by the same key</li>
+          <li>Updates included</li>
+        </ul>
+        <a class="btn primary big" data-buy href="https://wrapfilmassistant.lemonsqueezy.com/buy">Buy now</a>
+        <p class="fine">Secure checkout. Your key and download links are emailed after you pay.</p>
+      </div>
+      <div class="price-side">
+        <b>Need more computers?</b>
+        <span>Add an extra computer for <strong>$49</strong> each. iPhone and iPad never count.</span>
+        <a class="btn" data-buy-extra href="https://wrapfilmassistant.lemonsqueezy.com/buy">Add an extra computer</a>
+      </div>
     </div>
-    <p class="fine">Not sure which Mac you have? Click the Apple menu, then About This Mac. If it says Apple M1 or higher, choose Apple Silicon.</p>
+    <ol class="after">
+      <li><b>Buy</b><span>Pay at the secure checkout.</span></li>
+      <li><b>Check your email</b><span>Your key and download links arrive in minutes.</span></li>
+      <li><b>Download and unlock</b><span>Pick Mac or Windows, paste your key, start filming.</span></li>
+    </ol>
   </div>
 </section>
 
@@ -420,8 +442,9 @@ footer b { color: var(--ink); font-family: var(--display); }
     <div class="slate"><em>Questions</em><span>Quick answers</span></div>
     <h2>Before you download.</h2>
     <div class="faq">
-      <details><summary>What is a member key?</summary><p>The program is free to download. A member key unlocks it on your computer, and the same key unlocks the free iPhone and iPad companion app. The key is a one time purchase, not a subscription.</p></details>
-      <details><summary>Where do I get a member key?</summary><p>Member keys are not on sale yet. Check back here soon.</p></details>
+      <details><summary>What is a member key?</summary><p>It is your license. After you buy, we email you a key and your download links. Paste the key into Wrap! to unlock it. The same key unlocks the free iPhone and iPad app.</p></details>
+      <details><summary>How many computers can I use?</summary><p>Your key works on 2 computers. Need more? Add an extra computer for $49 each. iPhone and iPad do not count. You can also remove a computer from your key in Settings, for example when you replace a laptop.</p></details>
+      <details><summary>Is it a subscription?</summary><p>No. It is one payment and you keep it.</p></details>
       <details><summary>Does it work on Android?</summary><p>Not yet. Today Wrap! runs on Mac, Windows, iPhone and iPad.</p></details>
       <details><summary>Do my cast and crew need Wrap! installed?</summary><p>No. You can text them from your own Messages app and share call sheets with anyone.</p></details>
       <details><summary>Is my work safe?</summary><p>Your production lives on your computer. You can back it up to a single file at any time and restore it later.</p></details>
